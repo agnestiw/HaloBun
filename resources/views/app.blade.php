@@ -4,10 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('img/logo-halobun.png') }}" type="image/png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'HaloBun') }} - @yield('title', 'Informasi Kesehatan Ibu Hamil')</title>
+    <title>@yield('title', 'HaloBun')</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -53,33 +52,10 @@
 
                     <!-- User Menu & Mobile Toggle -->
                     <div class="flex items-center space-x-4">
-                        <!-- Notification Bell -->
-                        <button class="relative p-2 text-gray-600 hover:text-pink-500 transition-colors">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
-                            <span class="absolute top-1 right-1 w-2 h-2 bg-pink-500 rounded-full"></span>
-                        </button>
-
-                        <!-- User Profile -->
-                        @auth
-                            <div class="relative">
-                                <button
-                                    class="flex items-center space-x-2 text-gray-700 hover:text-pink-500 transition-colors">
-                                    <div class="w-8 h-8 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full"></div>
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </button>
-                            </div>
-                        @else
-                            <a href="{{ url('/pregnancy-track') }}"
-                                class="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transition-all transform hover:scale-105">
-                                Pregnancy Track
-                            </a>
-                        @endauth
+                        <a href="{{ url('/pregnancy-track') }}"
+                            class="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transition-all transform hover:scale-105">
+                            Pregnancy Track
+                        </a>
 
                         <!-- Mobile menu button -->
                         <button class="md:hidden p-2 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors"
@@ -124,7 +100,7 @@
                     <!-- About -->
                     <div class="space-y-4">
                         <div class="flex items-center space-x-2">
-<img src="{{ asset('img/logo-halobun.png') }}" alt="Logo HaloBun" class="h-8 w-auto"> 
+                            <img src="{{ asset('img/logo-halobun.png') }}" alt="Logo HaloBun" class="h-8 w-auto">
                             <span
                                 class="text-xl font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">HaloBun</span>
                         </div>

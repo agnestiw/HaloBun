@@ -13,7 +13,7 @@
   if (empty($articles)) {
     $articles = [
       [
-        'title' => 'Minggu 8–12: Tonggak Perkembangan Janin Awal',
+        'title' => 'Minggu 8-12: Tonggak Perkembangan Janin Awal',
         'excerpt' => 'Kenali perkembangan organ vital dan perubahan yang umum terjadi pada trimester pertama.',
         'category' => 'Perkembangan Janin',
         'trimester' => 1,

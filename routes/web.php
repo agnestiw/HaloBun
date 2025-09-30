@@ -1,31 +1,21 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/', fn () => view('home'))->name('home');
+Route::get('/artikel', fn () => view('article'))->name('article');
+Route::get('/video', fn () => view('video'))->name('video');
+Route::get('/fasilitas', fn () => view('fasilitas'))->name('fasilitas');
+Route::get('/faq', fn () => view('faq'))->name('faq');
+Route::get('/contact', fn () => view('contact'))->name('contact');
+Route::get('/pregnancy-track', fn () => view('pregnancy'))->name('pregnancy.track');
+
+Route::middleware('web')->group(function () {
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
-Route::get('/artikel', function () {
-    return view('article');
-});
-
-Route::get('/video', function () {
-    return view('video');
-});
-
-Route::get('/fasilitas', function () {
-    return view('fasilitas');
-});
-
-Route::get('/faq', function () {
-    return view('faq');
-});
-
-Route::get('/contact', function () {
-    return view('contact');
-});
-
-Route::get('/pregnancy-track', function () {
-    return view('pregnancy');
-});
+Route::get('/admin-test', fn () => 'Admin Masuk')->middleware(['auth', 'admin']);
