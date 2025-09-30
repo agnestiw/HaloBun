@@ -1,6 +1,4 @@
-@extends('app')
-
-@section('title', 'FAQ - HaloBun')
+@extends('layouts.app')
 
 @section('content')
 @php

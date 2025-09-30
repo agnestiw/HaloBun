@@ -1,6 +1,4 @@
-@extends('app')
-
-@section('title', 'Fasilitas Kesehatan')
+@extends('layouts.app')
 
 @section('content')
 @php

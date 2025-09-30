@@ -1,6 +1,4 @@
-@extends('app')
-
-@section('title', 'Video Edukasi')
+@extends('layouts.app')
 
 @section('content')
 @php

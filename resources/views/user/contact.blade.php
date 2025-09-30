@@ -1,6 +1,4 @@
-@extends('app')
-
-@section('title', 'Kontak | HaloBun')
+@extends('layouts.app')
 
 @push('styles')
 <style>

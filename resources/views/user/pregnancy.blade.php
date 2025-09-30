@@ -1,6 +1,4 @@
-@extends('app')
-
-@section('title', 'Pregnancy Track')
+@extends('layouts.app')
 
 @section('content')
 @php

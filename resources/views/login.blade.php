@@ -1,4 +1,4 @@
-@extends('app')
+@extends('layouts.app')
 
 @section('content')
 <main class="min-h-[70vh] py-10">
@@ -32,7 +32,7 @@
           </div>
         @endif
 
-        <form method="POST" action="/login" class="space-y-5" novalidate>
+        <form method="POST" action="{{ route('login') }}" class="space-y-5" novalidate>
           @csrf
 
            {{-- Email  --}}
@@ -117,11 +117,6 @@
 
          {{-- Secondary actions  --}}
         <div class="space-y-3">
-          {{-- <a
-            href="#"
-            class="w-full inline-flex items-center justify-center rounded-full border border-pink-200 bg-pink-50/60 text-pink-700 px-5 py-3 text-sm font-semibold hover:bg-pink-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-pink-200">
-            Buat Akun Baru
-          </a> --}}
           <a
             href="/"
             class="w-full inline-flex items-center justify-center rounded-full border border-pink-200 bg-white text-gray-700 px-5 py-3 text-sm font-medium hover:bg-gray-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-pink-200">
