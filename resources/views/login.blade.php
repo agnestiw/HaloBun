@@ -38,7 +38,7 @@
            {{-- Email  --}}
           <div>
             <label for="email" class="block text-sm font-medium text-gray-800 mb-1">
-              {{-- Email --}}
+              Email
             </label>
             <div class="relative">
               <input
@@ -87,15 +87,15 @@
           </div>
 
            {{-- Options  --}}
-          <div class="flex items-center justify-between gap-3">
+          {{-- <div class="flex items-center justify-between gap-3">
             <label class="inline-flex items-center gap-2 text-sm text-gray-700">
               <input type="checkbox" name="remember" class="h-4 w-4 rounded border-pink-300 text-pink-600 focus:ring-pink-400" />
-              {{-- Ingat saya --}}
+              Ingat saya
             </label>
             <a href="#" class="text-sm font-medium text-pink-600 hover:text-pink-700 underline underline-offset-4">
               Lupa kata sandi?
             </a>
-          </div>
+          </div> --}}
 
            {{-- Submit  --}}
           <button
