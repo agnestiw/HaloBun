@@ -1,11 +1,7 @@
 @extends('layouts.app')
 
-{{-- @section('title', 'Beranda') --}}
-
 @push('styles')
-    {{-- optional: gaya kecil untuk badge/ornamen --}}
     <style>
-        /* Warna lembut yang selaras dengan layout (pink/purple) */
         .soft-card {
             background: linear-gradient(180deg, rgba(255, 240, 245, 0.6), rgba(255, 255, 255, 0.9));
         }
@@ -13,118 +9,6 @@
 @endpush
 
 @section('content')
-    @php
-        if (empty($latestArticles)) {
-            $latestArticles = [
-                [
-                    'title' => 'Trimester Pertama: Apa yang Perlu Diperhatikan?',
-                    'excerpt' =>
-                        'Kenali tanda awal kehamilan, cek nutrisi harian, dan tips menghadapi mual agar tetap bugar.',
-                    'date' => now()->subDays(1)->format('d M Y'),
-                    'read_time' => '5 menit baca',
-                    'url' => url('/artikel/trimester-pertama'),
-                    'thumbnail' =>
-                        'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop',
-                ],
-                [
-                    'title' => 'Nutrisi Ibu Hamil: Menu Seimbang Setiap Hari',
-                    'excerpt' =>
-                        'Contoh menu harian, porsi ideal, dan cara memenuhi kebutuhan zat besi serta asam folat.',
-                    'date' => now()->subDays(3)->format('d M Y'),
-                    'read_time' => '7 menit baca',
-                    'url' => url('/artikel/nutrisi-ibu-hamil'),
-                    'thumbnail' =>
-                        'https://images.unsplash.com/photo-1484980972926-edee96e0960d?q=80&w=1200&auto=format&fit=crop',
-                ],
-                [
-                    'title' => 'Olahraga Ringan yang Aman Saat Hamil',
-                    'excerpt' =>
-                        'Rekomendasi peregangan dan jalan kaki 30 menit untuk menjaga kebugaran selama kehamilan.',
-                    'date' => now()->subDays(5)->format('d M Y'),
-                    'read_time' => '4 menit baca',
-                    'url' => url('/artikel/olahraga-aman'),
-                    'thumbnail' =>
-                        'https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1200&auto=format&fit=crop',
-                ],
-            ];
-        }
-
-        if (empty($latestVideos)) {
-            $latestVideos = [
-                [
-                    'title' => 'Senam Hamil: Peregangan 10 Menit',
-                    'url' => '#',
-                    'duration' => '10:12',
-                    'thumbnail' => 'https://img.youtube.com/vi/ysz5S6PUM-U/hqdefault.jpg',
-                ],
-                [
-                    'title' => 'Tips Mengurangi Mual di Pagi Hari',
-                    'url' => '#',
-                    'duration' => '06:47',
-                    'thumbnail' => 'https://img.youtube.com/vi/jNQXAC9IVRw/hqdefault.jpg',
-                ],
-                [
-                    'title' => 'Persiapan Persalinan: Checklist untuk Ibu',
-                    'url' => '#',
-                    'duration' => '08:03',
-                    'thumbnail' => 'https://img.youtube.com/vi/oHg5SJYRHA0/hqdefault.jpg',
-                ],
-            ];
-        }
-
-        if (empty($latestFaqs)) {
-            $latestFaqs = [
-                [
-                    'question' => 'Apakah aman minum kopi saat hamil?',
-                    'answer' =>
-                        'Boleh dalam jumlah terbatas (sekitar 1 cangkir/hari). Konsultasikan dengan tenaga kesehatan jika memiliki kondisi tertentu.',
-                ],
-                [
-                    'question' => 'Kapan pertama kali saya perlu USG?',
-                    'answer' =>
-                        'Biasanya pada trimester pertama (sekitar minggu ke-8–12) untuk memastikan perkembangan janin dan usia kehamilan.',
-                ],
-                [
-                    'question' => 'Bagaimana cara mengatasi kram kaki di malam hari?',
-                    'answer' =>
-                        'Cobalah peregangan ringan sebelum tidur, jaga hidrasi, dan penuhi kebutuhan kalsium serta magnesium.',
-                ],
-            ];
-        }
-
-        if (empty($latestFacilities) && empty($facilities)) {
-            $latestFacilities = [
-                [
-                    'name' => 'RSIA Sehat Ibu',
-                    'type' => 'Rumah Sakit Ibu & Anak',
-                    'address' => 'Jl. Melati No. 12, Bandung',
-                    'distance_km' => 2.4,
-                    'open_now' => true,
-                    'url' => url('/fasilitas/rsia-sehat-ibu'),
-                    'map_url' => 'https://maps.google.com/?q=RSIA+Sehat+Ibu+Bandung',
-                ],
-                [
-                    'name' => 'Klinik Bunda Ceria',
-                    'type' => 'Klinik',
-                    'address' => 'Jl. Kenanga No. 5, Jakarta Selatan',
-                    'distance_km' => 5.8,
-                    'open_now' => false,
-                    'url' => url('/fasilitas/klinik-bunda-ceria'),
-                    'map_url' => 'https://maps.google.com/?q=Klinik+Bunda+Ceria+Jakarta',
-                ],
-                [
-                    'name' => 'Puskesmas Mawar',
-                    'type' => 'Puskesmas',
-                    'address' => 'Jl. Mawar No. 20, Yogyakarta',
-                    'distance_km' => 1.1,
-                    'open_now' => true,
-                    'url' => url('/fasilitas/puskesmas-mawar'),
-                    'map_url' => 'https://maps.google.com/?q=Puskesmas+Mawar+Yogyakarta',
-                ],
-            ];
-        }
-    @endphp
-
     <section aria-labelledby="hero" class="relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
             <div class="grid md:grid-cols-2 gap-8 items-center">
@@ -252,34 +136,42 @@
                         </span>
                         <h3 class="font-semibold text-gray-900">Artikel Terbaru</h3>
                     </div>
-                    <a href="{{ url('/fasilitas') }}"
+                    <a href="{{ url('/artikel') }}"
                         class="hidden sm:inline-flex items-center text-sm text-pink-600 hover:underline">
                         Lihat semua Artikel
                     </a>
                 </div>
                 <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     @forelse(($latestArticles ?? []) as $a)
-                        <a href="{{ $a['url'] ?? '#' }}" aria-label="Baca artikel: {{ $a['title'] ?? 'Artikel' }}"
+                        {{-- Pastikan menggunakan $latestArticles dari controller --}}
+                        {{-- Perhatikan bahwa $a sekarang adalah objek Article, bukan array --}}
+                        <a href="{{ route('article.show', $a->slug) }}"
+                            aria-label="Baca artikel: {{ $a->title ?? 'Artikel' }}"
                             class="group rounded-2xl border border-pink-100 bg-white hover:shadow-md transition overflow-hidden">
-                            @if (!empty($a['thumbnail']))
+                            @if (!empty($a->thumbnail))
+                                {{-- Gunakan -> untuk objek --}}
                                 <div class="aspect-[16/9] bg-pink-50">
-                                    <img src="{{ $a['thumbnail'] }}" alt="Gambar {{ $a['title'] ?? 'Artikel' }}"
-                                        class="w-full h-full object-cover">
+                                    <img src="{{ asset('storage/' . $a->thumbnail) }}"
+                                        alt="Gambar {{ $a->title ?? 'Artikel' }}" class="w-full h-full object-cover">
                                 </div>
                             @endif
                             <div class="p-4">
                                 <h4 class="line-clamp-2 font-medium text-gray-900 group-hover:text-pink-600">
-                                    {{ $a['title'] ?? 'Judul artikel' }}
+                                    {{ $a->title ?? 'Judul artikel' }} {{-- Gunakan -> untuk objek --}}
                                 </h4>
                                 <p class="mt-1 text-sm text-gray-600 line-clamp-2">
-                                    {{ $a['excerpt'] ?? 'Ringkasan singkat artikel.' }}
+                                    {{ \Illuminate\Support\Str::words(strip_tags($a->content), 20, '...') }}
+                                    {{-- Ringkasan otomatis --}}
                                 </p>
                                 <div class="mt-2 flex items-center gap-2 text-xs text-gray-500">
-                                    <span>{{ $a['date'] ?? now()->format('d M Y') }}</span>
-                                    @if (!empty($a['read_time']))
-                                        <span>•</span>
-                                        <span>{{ $a['read_time'] }}</span>
+                                    {{-- Tampilkan penulis utama --}}
+                                    <span class="font-medium text-gray-700 truncate">{{ $a->author1 }}</span>
+                                    <span aria-hidden="true">•</span>
+                                    {{-- Tampilkan tanggal publikasi --}}
+                                    @if ($a->published_at)
+                                        <span>{{ $a->published_at->format('d M Y') }}</span>
                                     @endif
+                                    {{-- Hapus read_time jika tidak ada lagi di database --}}
                                 </div>
                             </div>
                         </a>
@@ -294,7 +186,8 @@
                 <div class="flex items-center gap-2 justify-between">
                     <div class="flex items-center gap-2">
                         <span class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-pink-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <svg class="w-4 h-4 text-pink-600" viewBox="0 0 24 24" fill="currentColor"
+                                aria-hidden="true">
                                 <path d="M8 5v14l11-7-11-7z" />
                             </svg>
                         </span>

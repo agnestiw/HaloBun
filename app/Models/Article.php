@@ -28,10 +28,12 @@ class Article extends Model
         'author1',
         'author2',
         'author3',
+        'published_at',
     ];
 
     protected $casts = [
         'category' => ArticleCategory::class,
+        'published_at' => 'datetime',
     ];
 
     /**

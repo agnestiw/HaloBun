@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => view('user.home'))->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// article for user
 Route::get('/artikel', [ArticleController::class, 'publicIndex'])->name('article');
 Route::get('/artikel/{article:slug}', [ArticleController::class, 'publicShow'])->name('article.show');
 
@@ -23,8 +26,8 @@ Route::middleware('web')->group(function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', fn () => view('admin.dashboard'))->name('dashboard');
-    // Route::get('/artikel', fn () => view('admin.article'))->name('artikel');
     
+    // article for admin
     Route::patch('artikel/{artikel}/toggle-status', [ArticleController::class, 'toggleStatus'])->name('artikel.toggleStatus');
     Route::resource('artikel', ArticleController::class);
     

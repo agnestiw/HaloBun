@@ -100,9 +100,9 @@
                                     {{ \Illuminate\Support\Str::words(strip_tags($a->content), 20, '...') }}
                                 </p>
                                 <div class="mt-2 flex items-center gap-2 text-xs text-gray-500">
-                                    <span>{{ $a->created_at->format('d M Y') }}</span>
-                                    <span class="font-medium text-gray-700 truncate">{{ $a->author1 }}</span>
-                                    <span aria-hidden="true">•</span>
+                                    @if ($a->published_at)
+                                        <span>{{ $a->published_at->format('d M Y') }}</span>
+                                    @endif
                                 </div>
                             </div>
                         </article>

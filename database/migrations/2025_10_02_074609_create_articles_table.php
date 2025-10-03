@@ -22,6 +22,7 @@ return new class extends Migration
             $table->tinyInteger('trimester');
             $table->string('thumbnail')->nullable();
             $table->enum('status', ['Published', 'Draft'])->default('Draft');
+            $table->timestamp('published_at')->nullable();
             $table->string('author1');
             $table->string('author2')->nullable();
             $table->string('author3')->nullable();

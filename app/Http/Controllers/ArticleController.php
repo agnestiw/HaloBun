@@ -15,7 +15,8 @@ class ArticleController extends Controller
     public function publicIndex(Request $request)
     {
         // Mulai query untuk artikel yang sudah 'Published'
-        $query = Article::where('status', 'Published');
+        $query = Article::where('status', 'Published')
+            ->where('published_at', '<=', now());
 
         // 1. Filter berdasarkan pencarian (search)
         if ($request->filled('search')) {
@@ -23,7 +24,7 @@ class ArticleController extends Controller
             // Mencari di kolom 'title' DAN 'content'
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('content', 'like', "%{$search}%");
+                    ->orWhere('content', 'like', "%{$search}%");
             });
         }
 
@@ -39,11 +40,11 @@ class ArticleController extends Controller
 
         // Ambil hasil query dengan urutan terbaru dan pagination
         // Menampilkan 9 artikel per halaman
-        $articles = $query->latest()->paginate(9);
+        $articles = $query->orderBy('published_at', 'desc')->paginate(9);
 
         // Ambil semua Enum kategori untuk ditampilkan di dropdown filter
         $categories = ArticleCategory::cases();
-        
+
         // Data trimester untuk dropdown filter
         $trimesters = [1, 2, 3];
 
@@ -67,10 +68,48 @@ class ArticleController extends Controller
     }
 
     // Method untuk halaman daftar artikel di admin
-    public function index()
+    // app/Http/Controllers/Admin/ArticleController.php
+
+    public function index(Request $request)
     {
-        $articles = Article::latest()->get();
-        return view('admin.articles.index', compact('articles'));
+        // Siapkan data untuk dropdown filter dari Enum dan array statis
+        $categories = ArticleCategory::cases(); // Ini akan mengirim array OBJEK Enum
+        $statuses = ['Published', 'Draft'];
+        $trimesters = [1, 2, 3];
+
+        // Mulai query dasar
+        $query = Article::query();
+
+        // Terapkan filter jika ada
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+        if ($request->filled('trimester')) {
+            $query->where('trimester', $request->trimester);
+        }
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $sortableColumns = ['id', 'title', 'status', 'published_at'];
+        $sort = $request->input('sort', 'published_at'); // Default sort by published_at
+        $direction = $request->input('direction', 'desc'); // Default direction desc
+
+        // Pastikan kolom dan arah sorting valid
+        if (in_array($sort, $sortableColumns) && in_array($direction, ['asc', 'desc'])) {
+            $query->orderBy($sort, $direction);
+        } else {
+            // Fallback ke default jika parameter tidak valid
+            $query->orderBy('published_at', 'desc');
+        }
+
+        // Ambil hasil dengan urutan terbaru dan pagination (misal: 10 per halaman)
+        $articles = $query->latest('published_at')->paginate(10);
+
+        return view('admin.articles.index', compact('articles', 'categories', 'statuses', 'trimesters'));
     }
 
     // Menampilkan form untuk membuat artikel baru
@@ -93,6 +132,7 @@ class ArticleController extends Controller
             'author1' => 'required|string|max:255',
             'author2' => 'nullable|string|max:255',
             'author3' => 'nullable|string|max:255',
+            'published_at' => 'nullable|date',
         ]);
 
         if ($request->hasFile('thumbnail')) {
@@ -129,6 +169,7 @@ class ArticleController extends Controller
             'author1' => 'required|string|max:255',
             'author2' => 'nullable|string|max:255',
             'author3' => 'nullable|string|max:255',
+            'published_at' => 'nullable|date',
         ]);
 
         if ($request->hasFile('thumbnail')) {
@@ -166,6 +207,9 @@ class ArticleController extends Controller
             $message = 'Artikel berhasil diubah menjadi draft.';
         } else {
             $artikel->status = 'Published';
+            if (is_null($artikel->published_at)) {
+                $artikel->published_at = now();
+            }
             $message = 'Artikel berhasil dipublikasikan.';
         }
 

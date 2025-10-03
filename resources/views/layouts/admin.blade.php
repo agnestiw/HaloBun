@@ -16,7 +16,7 @@
     @stack('styles')
 </head>
 
-<body class="font-['Poppins'] antialiased bg-gradient-to-br from-pink-50 via-white to-purple-50">
+<body class="font-['Poppins'] antialiased bg-gradient-to-b from-pink-50 to-white">
     <div class="min-h-screen">
         <nav class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-pink-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

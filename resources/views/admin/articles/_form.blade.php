@@ -67,6 +67,15 @@
                 </select>
             </div>
         @endif
+        <div>
+            <label for="published_at" class="block text-sm font-medium text-gray-700">Tanggal Publikasi</label>
+            <input type="date" name="published_at" id="published_at"
+                value="{{ old('published_at', $article?->published_at?->format('Y-m-d')) }}"
+                class="mt-1 block w-full rounded-xl border-pink-200 shadow-sm focus:border-pink-300 focus:ring focus:ring-pink-200 focus:ring-opacity-50 px-4 py-2 text-base">
+            <p class="mt-1 text-xs text-gray-500">
+                Jika kosong akan diisi hari ini saat status diubah ke Published
+            </p>
+        </div>
         <div class="space-y-2 rounded-lg border border-pink-100 p-3">
             <h3 class="text-sm font-medium text-gray-800">Penulis</h3>
             <div>
