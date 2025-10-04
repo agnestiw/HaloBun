@@ -190,7 +190,7 @@
                         </span>
                         <h3 class="font-semibold text-gray-900">Video Terbaru</h3>
                     </div>
-                    <a href="{{ url('/fasilitas') }}"
+                    <a href="{{ url('/video') }}"
                         class="hidden sm:inline-flex items-center text-sm text-pink-600 hover:underline">
                         Lihat semua video
                     </a>
@@ -239,48 +239,6 @@
                         </a>
                     @empty
                         <p class="text-sm text-gray-600">Belum ada video terbaru saat ini.</p>
-                    @endforelse
-                </div>
-            </div>
-
-            {{-- FAQ Terbaru (Cards + details) --}}
-            <div class="mt-10">
-                <div class="flex items-center gap-2 justify-between">
-                    <div class="flex items-center gap-2">
-                        <span class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-pink-600" viewBox="0 0 24 24" fill="currentColor"
-                                aria-hidden="true">
-                                <path
-                                    d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm1.07-7.75l-.9.92A3.5 3.5 0 0011 14h-2v-.5a5.5 5.5 0 011.61-3.9l1.2-1.2a1.5 1.5 0 10-2.12-2.12l-.69.7-1.42-1.42.7-.7a3.5 3.5 0 014.95 4.95z" />
-                            </svg>
-                        </span>
-                        <h3 class="font-semibold text-gray-900">FAQ Terbaru</h3>
-                    </div>
-                    <a href="{{ url('/fasilitas') }}"
-                        class="hidden sm:inline-flex items-center text-sm text-pink-600 hover:underline">
-                        Lihat semua FAQ
-                    </a>
-                </div>
-                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    @forelse(($latestFaqs ?? []) as $f)
-                        <div class="rounded-2xl border border-pink-100 bg-white p-4">
-                            <details class="group">
-                                <summary class="list-none cursor-pointer flex items-center justify-between gap-3">
-                                    <span class="font-medium text-gray-900 line-clamp-2">
-                                        {{ $f['question'] ?? 'Pertanyaan umum' }}
-                                    </span>
-                                    <svg class="w-4 h-4 text-pink-600 group-open:rotate-180 transition"
-                                        viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                        <path d="M7 10l5 5 5-5z" />
-                                    </svg>
-                                </summary>
-                                <div class="mt-2 text-sm text-gray-700 leading-relaxed">
-                                    {!! $f['answer'] ?? 'Jawaban singkat untuk pertanyaan umum.' !!}
-                                </div>
-                            </details>
-                        </div>
-                    @empty
-                        <p class="text-sm text-gray-600">Belum ada FAQ terbaru saat ini.</p>
                     @endforelse
                 </div>
             </div>
@@ -369,9 +327,51 @@
                             </div>
                         </article>
                     @empty
-                        <div class="sm:col-span-2 lg:col-span-3 text-center py-10">
+                        <div class="sm:col-span-2 lg:col-span-3 py-0">
                             <p class="text-sm text-gray-600">Belum ada data fasilitas kesehatan.</p>
                         </div>
+                    @endforelse
+                </div>
+            </div>
+
+                        {{-- FAQ Terbaru (Cards + details) --}}
+            <div class="mt-10">
+                <div class="flex items-center gap-2 justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-pink-600" viewBox="0 0 24 24" fill="currentColor"
+                                aria-hidden="true">
+                                <path
+                                    d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm1.07-7.75l-.9.92A3.5 3.5 0 0011 14h-2v-.5a5.5 5.5 0 011.61-3.9l1.2-1.2a1.5 1.5 0 10-2.12-2.12l-.69.7-1.42-1.42.7-.7a3.5 3.5 0 014.95 4.95z" />
+                            </svg>
+                        </span>
+                        <h3 class="font-semibold text-gray-900">FAQ Terbaru</h3>
+                    </div>
+                    <a href="{{ url('/faq') }}"
+                        class="hidden sm:inline-flex items-center text-sm text-pink-600 hover:underline">
+                        Lihat semua FAQ
+                    </a>
+                </div>
+                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    @forelse(($latestFaqs ?? []) as $f)
+                        <div class="rounded-2xl border border-pink-100 bg-white p-4">
+                            <details class="group">
+                                <summary class="list-none cursor-pointer flex items-center justify-between gap-3">
+                                    <span class="font-medium text-gray-900 line-clamp-2">
+                                        {{ $f['question'] ?? 'Pertanyaan umum' }}
+                                    </span>
+                                    <svg class="w-4 h-4 text-pink-600 group-open:rotate-180 transition"
+                                        viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M7 10l5 5 5-5z" />
+                                    </svg>
+                                </summary>
+                                <div class="mt-2 text-sm text-gray-700 leading-relaxed">
+                                    {!! $f['answer'] ?? 'Jawaban singkat untuk pertanyaan umum.' !!}
+                                </div>
+                            </details>
+                        </div>
+                    @empty
+                        <p class="text-sm text-gray-600">Belum ada FAQ terbaru saat ini.</p>
                     @endforelse
                 </div>
             </div>

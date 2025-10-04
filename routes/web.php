@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\HomeController;
@@ -20,7 +21,9 @@ Route::get('/video', [VideoController::class, 'publicIndex'])->name('video');
 Route::get('/fasilitas', [FacilityController::class, 'publicIndex'])->name('fasilitas');
 Route::get('/api/fasilitas/terdekat', [FacilityController::class, 'fetchNearby'])->name('api.fasilitas.terdekat');
 
-Route::get('/faq', fn() => view('user.faq'))->name('faq');
+// FAQ for user
+Route::get('/faq', [FaqController::class, 'publicIndex'])->name('faq');
+
 Route::get('/contact', fn() => view('user.contact'))->name('contact');
 Route::get('/pregnancy-track', fn() => view('user.pregnancy'))->name('pregnancy.track');
 
@@ -52,6 +55,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         'fasilitas' => 'facility',
     ]);
 
-
-    Route::get('/faq', fn() => view('admin.faq'))->name('faq');
+    // FAQ for admin
+    Route::patch('faq/{faq}/toggle-status', [FaqController::class, 'toggleStatus'])->name('faq.toggleStatus');
+    Route::resource('faq', FaqController::class);
 });

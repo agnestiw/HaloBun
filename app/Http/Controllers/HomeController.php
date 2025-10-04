@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Facility;
+use App\Models\Faq;
 use App\Models\Video;
 use Illuminate\Http\Request;
 
@@ -27,25 +28,10 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-
-        $latestFaqs = [
-            [
-                'question' => 'Apakah aman minum kopi saat hamil?',
-                'answer' =>
-                'Boleh dalam jumlah terbatas (sekitar 1 cangkir/hari). Konsultasikan dengan tenaga kesehatan jika memiliki kondisi tertentu.',
-            ],
-            [
-                'question' => 'Kapan pertama kali saya perlu USG?',
-                'answer' =>
-                'Biasanya pada trimester pertama (sekitar minggu ke-8–12) untuk memastikan perkembangan janin dan usia kehamilan.',
-            ],
-            [
-                'question' => 'Bagaimana cara mengatasi kram kaki di malam hari?',
-                'answer' =>
-                'Cobalah peregangan ringan sebelum tidur, jaga hidrasi, dan penuhi kebutuhan kalsium serta magnesium.',
-            ],
-        ];
-
+        $latestFaqs = Faq::where('status', 'Published')
+            ->latest()
+            ->take(3)
+            ->get();
 
         return view('user.home', compact('latestArticles', 'latestVideos', 'latestFacilities', 'latestFaqs'));
     }
