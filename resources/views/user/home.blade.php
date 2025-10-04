@@ -143,8 +143,6 @@
                 </div>
                 <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     @forelse(($latestArticles ?? []) as $a)
-                        {{-- Pastikan menggunakan $latestArticles dari controller --}}
-                        {{-- Perhatikan bahwa $a sekarang adalah objek Article, bukan array --}}
                         <a href="{{ route('article.show', $a->slug) }}"
                             aria-label="Baca artikel: {{ $a->title ?? 'Artikel' }}"
                             class="group rounded-2xl border border-pink-100 bg-white hover:shadow-md transition overflow-hidden">
@@ -186,8 +184,7 @@
                 <div class="flex items-center gap-2 justify-between">
                     <div class="flex items-center gap-2">
                         <span class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-pink-600" viewBox="0 0 24 24" fill="currentColor"
-                                aria-hidden="true">
+                            <svg class="w-4 h-4 text-pink-600" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M8 5v14l11-7-11-7z" />
                             </svg>
                         </span>
@@ -198,15 +195,19 @@
                         Lihat semua video
                     </a>
                 </div>
+                {{-- Kode Baru dengan Data dari Database --}}
                 <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    @forelse(($latestVideos ?? []) as $v)
-                        <a href="{{ $v['url'] ?? '#' }}" aria-label="Tonton video: {{ $v['title'] ?? 'Video' }}"
+                    @forelse($latestVideos as $v)
+                        <a href="{{ $v->url }}" target="_blank" rel="noopener"
+                            aria-label="Tonton video: {{ $v->title }}"
                             class="group rounded-2xl border border-pink-100 bg-white hover:shadow-md transition overflow-hidden">
+
                             <div class="relative aspect-video bg-pink-50">
-                                @if (!empty($v['thumbnail']))
-                                    <img src="{{ $v['thumbnail'] }}" alt="Thumbnail {{ $v['title'] ?? 'Video' }}"
+                                @if ($v->thumbnail)
+                                    <img src="{{ $v->thumbnail }}" alt="Thumbnail {{ $v->title }}"
                                         class="w-full h-full object-cover">
                                 @else
+                                    {{-- Placeholder jika tidak ada thumbnail --}}
                                     <div class="absolute inset-0 flex items-center justify-center">
                                         <svg class="w-10 h-10 text-pink-400" viewBox="0 0 24 24" fill="currentColor"
                                             aria-hidden="true">
@@ -214,13 +215,25 @@
                                         </svg>
                                     </div>
                                 @endif
-                                <span class="absolute bottom-2 right-2 text-xs bg-black/60 text-white px-2 py-0.5 rounded">
-                                    {{ $v['duration'] ?? '—:—' }}
-                                </span>
+
+                                @if ($v->duration)
+                                    <span
+                                        class="absolute bottom-2 right-2 text-xs bg-black/60 text-white px-2 py-0.5 rounded">
+                                        {{ $v->duration }}
+                                    </span>
+                                @endif
                             </div>
+
                             <div class="p-4">
+                                {{-- Menampilkan judul video --}}
                                 <div class="line-clamp-2 text-sm font-medium text-gray-900 group-hover:text-pink-600">
-                                    {{ $v['title'] ?? 'Judul video' }}
+                                    {{ $v->title }}
+                                </div>
+                                {{-- Menampilkan platform video --}}
+                                <div
+                                    class="mt-2 text-xs font-medium 
+                    @if ($v->platform->value == 'YouTube') text-red-600 @else text-blue-600 @endif">
+                                    {{ $v->platform->value }}
                                 </div>
                             </div>
                         </a>

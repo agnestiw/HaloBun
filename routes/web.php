@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -11,7 +12,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/artikel', [ArticleController::class, 'publicIndex'])->name('article');
 Route::get('/artikel/{article:slug}', [ArticleController::class, 'publicShow'])->name('article.show');
 
-Route::get('/video', fn () => view('user.video'))->name('video');
+// video for user
+Route::get('/video', [VideoController::class, 'publicIndex'])->name('video');
+
 Route::get('/fasilitas', fn () => view('user.fasilitas'))->name('fasilitas');
 Route::get('/faq', fn () => view('user.faq'))->name('faq');
 Route::get('/contact', fn () => view('user.contact'))->name('contact');
@@ -31,7 +34,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::patch('artikel/{artikel}/toggle-status', [ArticleController::class, 'toggleStatus'])->name('artikel.toggleStatus');
     Route::resource('artikel', ArticleController::class);
     
-    Route::get('/video', fn () => view('admin.video'))->name('video');
+    // video for admin
+    Route::patch('video/{video}/toggle-status', [VideoController::class, 'toggleStatus'])->name('video.toggleStatus');
+    Route::resource('video', VideoController::class);
+
     Route::get('/fasilitas', fn () => view('admin.fasilitas'))->name('fasilitas');
     Route::get('/faq', fn () => view('admin.faq'))->name('faq');
 });

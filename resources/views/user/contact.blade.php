@@ -15,7 +15,7 @@
     <div class="grid md:grid-cols-2 gap-8 items-center">
       <div>
         <h1 id="hero-contact" class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 text-balance">
-          Kontak
+          Selamat datang di
           <span class="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">HaloBun</span>
         </h1>
         <p class="mt-4 text-gray-600 leading-relaxed">

@@ -1,8 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- GANTI SELURUH SECTION FILTER LAMA ANDA DENGAN INI --}}
-    <section aria-labelledby="filter" class="mt-10 sm:mt-12">
+    <section aria-labelledby="hero-video" class="relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+            <div class="flex flex-col gap-3">
+                <h1 id="hero-video" class="text-3xl sm:text-4xl font-semibold text-gray-900 text-balance">
+                    Artikel Edukasi Kehamilan
+                </h1>
+                <p class="text-gray-600 leading-relaxed">
+                    Baca berbagai artikel informatif dan terpercaya seputar kehamilan.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section aria-labelledby="filter" class="mt-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="rounded-2xl border border-pink-100 bg-white/80 backdrop-blur p-4 sm:p-5">
 
