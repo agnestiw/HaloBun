@@ -304,63 +304,74 @@
                         Lihat semua Lokasi Fasilitas
                     </a>
                 </div>
-                @php
-                    $facList = $latestFacilities ?? ($facilities ?? []);
-                @endphp
-                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    @forelse($facList as $f)
-                        <div
-                            class="rounded-2xl border border-pink-100 bg-white hover:shadow-md transition overflow-hidden">
-                            <div class="p-4 flex items-start gap-3">
-                                <div class="w-12 h-12 rounded-xl bg-pink-50 flex items-center justify-center shrink-0">
-                                    <svg class="w-6 h-6 text-pink-500" viewBox="0 0 24 24" fill="currentColor"
-                                        aria-hidden="true">
-                                        <path
-                                            d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
-                                    </svg>
+                {{-- Kode Baru dengan Data dari Database --}}
+                {{-- Kode Baru yang Lebih Detail --}}
+                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @forelse($latestFacilities as $f)
+                        <article
+                            class="facility-card rounded-xl border border-pink-100 bg-white hover:shadow-md transition overflow-hidden flex flex-col">
+                            {{-- Menampilkan Peta Embed jika ada --}}
+                            @if ($f->map_embed_url)
+                                <div class="aspect-video w-full">
+                                    {!! $f->map_embed_url !!}
                                 </div>
-                                <div class="min-w-0 flex-1">
-                                    <div class="flex items-center flex-wrap gap-2">
-                                        <h3 class="font-semibold text-gray-900 truncate">
-                                            {{ $f['name'] ?? 'Nama Fasilitas' }}
-                                        </h3>
-                                        @if (!empty($f['type']))
-                                            <span class="text-xs px-2 py-0.5 rounded-full bg-pink-100 text-pink-700">
-                                                {{ $f['type'] }}
-                                            </span>
-                                        @endif
-                                        @if (isset($f['open_now']))
-                                            <span
-                                                class="text-xs px-2 py-0.5 rounded-full {{ $f['open_now'] ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700' }}">
-                                                {{ $f['open_now'] ? 'Buka' : 'Tutup' }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                    <div class="mt-1 text-sm text-gray-700 line-clamp-2">
-                                        {{ $f['address'] ?? 'Alamat fasilitas kesehatan' }}
-                                    </div>
-                                    <div class="mt-1 text-xs text-gray-500">
-                                        @if (!empty($f['distance_km']))
-                                            ± {{ number_format($f['distance_km'], 1) }} km
-                                        @endif
-                                    </div>
+                            @endif
 
-                                    <div class="mt-3 flex items-center gap-3">
-                                        @if (!empty($f['url']))
-                                            <a href="{{ $f['url'] }}"
-                                                class="text-sm text-pink-600 hover:underline">Detail</a>
-                                        @endif
-                                        @if (!empty($f['map_url']))
-                                            <a href="{{ $f['map_url'] }}"
-                                                class="text-sm text-pink-600 hover:underline">Lihat
-                                                Peta</a>
-                                        @endif
-                                    </div>
+                            <div class="p-4 sm:p-5 flex-grow flex flex-col">
+                                {{-- Membuat URL Google Maps untuk judul --}}
+                                @php
+                                    $mapQuery = urlencode($f->name . ', ' . $f->address);
+                                    $mapUrl = "http://googleusercontent.com/maps/google.com/10{$mapQuery}";
+                                @endphp
+                                <h3 class="text-lg font-semibold text-gray-900 hover:text-pink-600 transition">
+                                    <a href="{{ $mapUrl }}" target="_blank"
+                                        rel="noopener">{{ $f->name }}</a>
+                                </h3>
+                                <div class="mt-1 text-sm text-gray-600">{{ $f->address }}</div>
+
+                                {{-- Detail Lengkap Fasilitas --}}
+                                <div class="mt-auto pt-3 flex flex-col gap-2 text-sm">
+
+                                    {{-- Tipe Fasilitas --}}
+                                    <span class="inline-flex items-center gap-1.5 font-medium text-pink-700">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                            <path
+                                                d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
+                                        </svg>
+                                        {{ Str::ucfirst(str_replace('_', ' ', $f->type->value)) }}
+                                    </span>
+
+                                    {{-- Telepon (hanya tampil jika ada) --}}
+                                    @if ($f->phone)
+                                        <span class="inline-flex items-center gap-1.5 text-gray-700">
+                                            <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684L10.7 8.177a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                            </svg>
+                                            <a href="tel:{{ $f->phone }}"
+                                                class="hover:text-pink-600">{{ $f->phone }}</a>
+                                        </span>
+                                    @endif
+
+                                    {{-- Jam Operasional (hanya tampil jika ada) --}}
+                                    @if ($f->hours)
+                                        <span class="inline-flex items-center gap-1.5 text-gray-700">
+                                            <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            {{ $f->hours }}
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
-                        </div>
+                        </article>
                     @empty
-                        <p class="text-sm text-gray-600">Belum ada data fasilitas kesehatan.</p>
+                        <div class="sm:col-span-2 lg:col-span-3 text-center py-10">
+                            <p class="text-sm text-gray-600">Belum ada data fasilitas kesehatan.</p>
+                        </div>
                     @endforelse
                 </div>
             </div>

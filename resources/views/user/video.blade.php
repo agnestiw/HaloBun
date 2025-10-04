@@ -21,7 +21,7 @@
             <div class="rounded-2xl border border-pink-100 bg-white/80 backdrop-blur p-4 sm:p-5">
 
                 {{-- Mulai Form Filter --}}
-                <form action="{{ route('video') }}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <form action="{{ route('video') }}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
 
                     {{-- Kolom Pencarian --}}
                     <div class="md:col-span-2">

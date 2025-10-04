@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Facility;
 use App\Models\Video;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,12 @@ class HomeController extends Controller
             ->latest() // Mengurutkan berdasarkan created_at terbaru
             ->take(3)
             ->get();
+
+        $latestFacilities = Facility::where('status', 'Published')
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
+
 
         $latestFaqs = [
             [
@@ -39,37 +46,7 @@ class HomeController extends Controller
             ],
         ];
 
-        $latestFacilities = [
-            [
-                'name' => 'RSIA Sehat Ibu',
-                'type' => 'Rumah Sakit Ibu & Anak',
-                'address' => 'Jl. Melati No. 12, Bandung',
-                'distance_km' => 2.4,
-                'open_now' => true,
-                'url' => url('/fasilitas/rsia-sehat-ibu'),
-                'map_url' => 'https://maps.google.com/?q=RSIA+Sehat+Ibu+Bandung',
-            ],
-            [
-                'name' => 'Klinik Bunda Ceria',
-                'type' => 'Klinik',
-                'address' => 'Jl. Kenanga No. 5, Jakarta Selatan',
-                'distance_km' => 5.8,
-                'open_now' => false,
-                'url' => url('/fasilitas/klinik-bunda-ceria'),
-                'map_url' => 'https://maps.google.com/?q=Klinik+Bunda+Ceria+Jakarta',
-            ],
-            [
-                'name' => 'Puskesmas Mawar',
-                'type' => 'Puskesmas',
-                'address' => 'Jl. Mawar No. 20, Yogyakarta',
-                'distance_km' => 1.1,
-                'open_now' => true,
-                'url' => url('/fasilitas/puskesmas-mawar'),
-                'map_url' => 'https://maps.google.com/?q=Puskesmas+Mawar+Yogyakarta',
-            ],
-        ];
 
-
-        return view('user.home', compact('latestArticles', 'latestVideos', 'latestFaqs', 'latestFacilities'));
+        return view('user.home', compact('latestArticles', 'latestVideos', 'latestFacilities', 'latestFaqs'));
     }
 }

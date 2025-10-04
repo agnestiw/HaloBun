@@ -38,10 +38,10 @@
                             class="text-gray-700 hover:text-pink-500 transition-colors font-medium">Artikel</a>
                         <a href="{{ url('/admin/video') }}"
                             class="text-gray-700 hover:text-pink-500 transition-colors font-medium">Video</a>
-                        <a href="{{ url('/admin/faq') }}"
-                            class="text-gray-700 hover:text-pink-500 transition-colors font-medium">FAQ</a>
                         <a href="{{ url('/admin/fasilitas') }}"
                             class="text-gray-700 hover:text-pink-500 transition-colors font-medium">Fasilitas</a>
+                        <a href="{{ url('/admin/faq') }}"
+                            class="text-gray-700 hover:text-pink-500 transition-colors font-medium">FAQ</a>
                     </div>
 
                     <div class="flex items-center space-x-3">
