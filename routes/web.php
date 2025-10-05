@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PregnancyController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +27,7 @@ Route::get('/api/fasilitas/terdekat', [FacilityController::class, 'fetchNearby']
 Route::get('/faq', [FaqController::class, 'publicIndex'])->name('faq');
 
 Route::get('/contact', fn() => view('user.contact'))->name('contact');
-Route::get('/pregnancy-track', fn() => view('user.pregnancy'))->name('pregnancy.track');
+Route::get('/pregnancy-track', [PregnancyController::class, 'index'])->name('pregnancy-track');
 
 
 // authentication
@@ -39,23 +41,23 @@ Route::middleware('web')->group(function () {
 
 // admin middleware
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', fn() => view('admin.dashboard'))->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // article for admin
+    // artikel
     Route::patch('artikel/{artikel}/toggle-status', [ArticleController::class, 'toggleStatus'])->name('artikel.toggleStatus');
     Route::resource('artikel', ArticleController::class);
 
-    // video for admin
+    // video
     Route::patch('video/{video}/toggle-status', [VideoController::class, 'toggleStatus'])->name('video.toggleStatus');
     Route::resource('video', VideoController::class);
 
-    // fasilitas for admin
+    // fasilitas
     Route::patch('fasilitas/{facility}/toggle-status', [FacilityController::class, 'toggleStatus'])->name('fasilitas.toggleStatus');
     Route::resource('fasilitas', FacilityController::class)->parameters([
         'fasilitas' => 'facility',
     ]);
 
-    // FAQ for admin
+    // FAQ
     Route::patch('faq/{faq}/toggle-status', [FaqController::class, 'toggleStatus'])->name('faq.toggleStatus');
     Route::resource('faq', FaqController::class);
 });

@@ -1,323 +1,333 @@
 @extends('layouts.app')
 
 @section('content')
-@php
-  if (!isset($weeklyGuides) || empty($weeklyGuides)) {
-      $weeklyGuides = [
-          // Trimester 1 (0–13)
-          ['week' => 4,  'trimester' => 1, 'title' => 'Minggu 4 — Awal Perkembangan', 'desc' => 'Sel embrio mulai berkembang, penting menjaga nutrisi dan istirahat.'],
-          ['week' => 8,  'trimester' => 1, 'title' => 'Minggu 8 — Organ Awal', 'desc' => 'Organ-organ dasar mulai terbentuk. Hindari paparan bahan berisiko.'],
-          ['week' => 12, 'trimester' => 1, 'title' => 'Minggu 12 — Risiko Menurun', 'desc' => 'Trimester pertama menuju akhir, risiko keguguran menurun.'],
-          // Trimester 2 (14–27)
-          ['week' => 16, 'trimester' => 2, 'title' => 'Minggu 16 — Gerakan Awal', 'desc' => 'Beberapa ibu mulai merasakan gerakan halus (quickening).'],
-          ['week' => 20, 'trimester' => 2, 'title' => 'Minggu 20 — USG Detail', 'desc' => 'Waktu yang baik untuk USG anatomi bayi yang lebih detail.'],
-          ['week' => 24, 'trimester' => 2, 'title' => 'Minggu 24 — Pertumbuhan Stabil', 'desc' => 'Pertumbuhan cepat, tetap pantau nutrisi dan hidrasi.'],
-          // Trimester 3 (28–40+)
-          ['week' => 30, 'trimester' => 3, 'title' => 'Minggu 30 — Posisi Janin', 'desc' => 'Perhatikan posisi janin, jaga keluhan punggung dan tidur.'],
-          ['week' => 34, 'trimester' => 3, 'title' => 'Minggu 34 — Persiapan Persalinan', 'desc' => 'Mulai siapkan tas persalinan dan rencana kelahiran.'],
-          ['week' => 38, 'trimester' => 3, 'title' => 'Minggu 38 — Menjelang Lahir', 'desc' => 'Pantau tanda persalinan, tetap tenang dan siap ke faskes.'],
-      ];
-  }
+    {{-- Bagian utama dari halaman kalkulator --}}
+    <section class="py-10 md:py-14">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {{-- Mengganti .kalkulator-kehamilan dengan style kartu dari home.blade.php --}}
+            <div class="rounded-2xl border border-pink-100 bg-white p-6 md:p-8 shadow-sm">
 
-  $calendarEmbedUrl = $calendarEmbedUrl ?? null;
-@endphp
+                {{-- Judul Utama --}}
+                <h1 class="text-3xl md:text-4xl font-semibold text-center text-gray-900 border-b border-pink-100 pb-4">
+                    Kalkulator Kehamilan
+                </h1>
 
-<section class="py-10 md:py-14">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="rounded-2xl border border-pink-100 bg-white/80 shadow-sm overflow-hidden">
-      <div class="p-6 md:p-10 bg-gradient-to-br from-pink-50 to-purple-50">
-        <h1 class="text-3xl md:text-4xl font-semibold text-balance">
-          <span class="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">Pregnancy Track</span>
-        </h1>
-        <p class="mt-3 text-slate-600 leading-relaxed">
-          Pantau usia kehamilan, perkiraan tanggal lahir, dan panduan mingguan dalam satu tempat. Dirancang dengan tampilan lembut, sederhana, dan ramah untuk ibu hamil.
-        </p>
-        <div class="mt-5 flex items-center gap-3">
-          <a href="#calc" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-white bg-gradient-to-r from-pink-500 to-purple-500 hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-pink-300">
-            <svg width="18" height="18" viewBox="0 0 24 24" class="opacity-90" fill="currentColor" aria-hidden="true"><path d="M12 2a1 1 0 0 1 1 1v8h8a1 1 0 1 1 0 2h-8v8a1 1 0 1 1-2 0v-8H3a1 1 0 1 1 0-2h8V3a1 1 0 0 1 1-1z"/></svg>
-            Mulai Menghitung
-          </a>
-          <a href="#guide" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-pink-700 bg-pink-100 hover:bg-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300">
-            Panduan Mingguan
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    {{-- Kolom Input --}}
+                    <div class="space-y-4">
+                        {{-- Input HPHT --}}
+                        <div class="form-group">
+                            <label for="hpht" class="block text-sm font-medium text-gray-700 mb-1">Hari Pertama Haid
+                                Terakhir (HPHT)</label>
+                            <input type="date" id="hpht" name="hpht"
+                                class="w-full rounded-xl border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 px-4 py-2 text-base">
+                        </div>
 
- {{-- Kalkulator Kehamilan  --}}
-<section id="calc" class="py-6 md:py-10">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-       {{-- Input  --}}
-      <div class="rounded-2xl border border-pink-100 bg-white p-6 md:p-8">
-        <h2 class="text-xl md:text-2xl font-semibold text-slate-800">Kalkulator Kehamilan</h2>
-        <p class="mt-2 text-slate-600 leading-relaxed">
-          Masukkan tanggal Hari Pertama Haid Terakhir (HPHT) untuk menghitung usia kehamilan dan perkiraan tanggal lahir (ETD).
-        </p>
-        <div class="mt-4 space-y-4">
-          <label class="block">
-            <span class="block text-sm text-slate-700 mb-1">Tanggal HPHT</span>
-            <input id="lmpDate" type="date" class="w-full rounded-xl border-slate-200 focus:border-pink-400 focus:ring-pink-300" />
-          </label>
-          <div class="flex items-center gap-3">
-            <button id="btnHitung" type="button" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-white bg-gradient-to-r from-pink-500 to-purple-500 hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-pink-300">
-              Hitung
-            </button>
-            <button id="btnReset" type="button" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-pink-700 bg-pink-100 hover:bg-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300">
-              Reset
-            </button>
-          </div>
-        </div>
+                        {{-- Input Siklus --}}
+                        <div class="form-group">
+                            <label for="siklus" class="block text-sm font-medium text-gray-700 mb-1">Lama Siklus
+                                Menstruasi (Hari)</label>
+                            <select id="siklus" name="siklus"
+                                class="w-full rounded-xl border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 px-4 py-2 text-base">
+                                <option value="21">21 hari</option>
+                                <option value="22">22 hari</option>
+                                <option value="23">23 hari</option>
+                                <option value="24">24 hari</option>
+                                <option value="25">25 hari</option>
+                                <option value="26">26 hari</option>
+                                <option value="27">27 hari</option>
+                                <option value="28" selected>28 hari (Normal)</option>
+                                <option value="29">29 hari</option>
+                                <option value="30">30 hari</option>
+                                <option value="31">31 hari</option>
+                                <option value="32">32 hari</option>
+                                <option value="33">33 hari</option>
+                                <option value="34">34 hari</option>
+                                <option value="35">35 hari</option>
+                            </select>
+                        </div>
 
-        <div class="mt-6">
-          <div class="rounded-xl border border-pink-100 bg-pink-50/60 p-4">
-            <div class="grid grid-cols-2 gap-4 md:grid-cols-4 text-center">
-              <div>
-                <p class="text-xs text-slate-500">Usia Kehamilan</p>
-                <p id="usia" class="mt-1 font-semibold text-slate-800">-</p>
-              </div>
-              <div>
-                <p class="text-xs text-slate-500">Trimester</p>
-                <p id="trimester" class="mt-1 font-semibold text-slate-800">-</p>
-              </div>
-              <div>
-                <p class="text-xs text-slate-500">ETD (HPL)</p>
-                <p id="etd" class="mt-1 font-semibold text-slate-800">-</p>
-              </div>
-              <div>
-                <p class="text-xs text-slate-500">Progres</p>
-                <p id="progressText" class="mt-1 font-semibold text-slate-800">-</p>
-              </div>
-            </div>
-
-             {{-- Progress bar  --}}
-            <div class="mt-4">
-              <div class="w-full h-2 rounded-full bg-slate-200 overflow-hidden">
-                <div id="progressBar" class="h-2 bg-gradient-to-r from-pink-500 to-purple-500" style="width:0%"></div>
-              </div>
-              <p id="calcStatus" class="sr-only" aria-live="polite"></p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-       {{-- Kalender (Embed)  --}}
-      <div class="rounded-2xl border border-pink-100 bg-white p-0 overflow-hidden">
-        <div class="p-6 md:p-8">
-          <h2 class="text-xl md:text-2xl font-semibold text-slate-800">Kalender Kehamilan</h2>
-          <p class="mt-2 text-slate-600 leading-relaxed">
-            Lihat kalender kehamilan untuk memahami perubahan tiap minggu. Anda dapat menyematkan tautan kalender kehamilan pilihan Anda.
-          </p>
-        </div>
-        <div class="px-6 md:px-8 pb-6">
-          @if($calendarEmbedUrl)
-            <div class="aspect-video w-full rounded-xl overflow-hidden border border-pink-100">
-              <iframe
-                src="{{ $calendarEmbedUrl }}"
-                class="w-full h-full"
-                title="Kalender Kehamilan"
-                loading="lazy"
-                referrerpolicy="no-referrer"
-                allowfullscreen
-              ></iframe>
-            </div>
-            <div class="mt-3 text-right">
-              <a href="{{ $calendarEmbedUrl }}" target="_blank" rel="noopener" class="text-sm text-pink-700 hover:underline">Buka di tab baru</a>
-            </div>
-          @else
-            <div class="rounded-xl border border-pink-100 bg-pink-50/60 p-4">
-              <p class="text-sm text-slate-700">
-                Belum ada tautan kalender yang disematkan. Minta admin untuk menambahkan variabel <span class="font-mono bg-white px-1 rounded">calendarEmbedUrl</span> dari controller.
-              </p>
-              <p class="mt-2 text-xs text-slate-500">
-                Contoh: halaman kalender publik atau tools kalkulator kehamilan yang mendukung embed.
-              </p>
-            </div>
-          @endif
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
- {{-- Panduan Mingguan (berdasarkan Trimester)  --}}
-<section id="guide" class="py-6 md:py-10">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="rounded-2xl border border-pink-100 bg-white p-6 md:p-8">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h2 class="text-xl md:text-2xl font-semibold text-slate-800">Panduan Mingguan</h2>
-          <p class="mt-1 text-slate-600 leading-relaxed">Materi detail tersedia di Notion. Gunakan filter untuk melihat per trimester dan cari berdasarkan kata kunci.</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button data-tri="all" class="tri-btn rounded-full px-4 py-2 text-sm bg-pink-100 text-pink-700 hover:bg-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300">Semua</button>
-          <button data-tri="1" class="tri-btn rounded-full px-4 py-2 text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-300">Trimester 1</button>
-          <button data-tri="2" class="tri-btn rounded-full px-4 py-2 text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-300">Trimester 2</button>
-          <button data-tri="3" class="tri-btn rounded-full px-4 py-2 text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-pink-300">Trimester 3</button>
-        </div>
-      </div>
-
-      <div class="mt-4 grid grid-cols-1 md:grid-cols-5 gap-4">
-        <div class="md:col-span-2">
-          <label class="block">
-            <span class="block text-sm text-slate-700 mb-1">Cari materi</span>
-            <input id="searchGuide" type="text" placeholder="Ketik kata kunci..." class="w-full rounded-xl border-slate-200 focus:border-pink-400 focus:ring-pink-300" />
-          </label>
-          @isset($notionEmbedUrl)
-            <div class="mt-4 rounded-xl border border-pink-100 bg-pink-50/60 p-3">
-              <p class="text-xs text-slate-700">Lihat materi lengkap di Notion:</p>
-              <a href="{{ $notionEmbedUrl }}" target="_blank" rel="noopener" class="text-sm text-pink-700 hover:underline break-all">{{ $notionEmbedUrl }}</a>
-            </div>
-          @endisset
-        </div>
-        <div class="md:col-span-3">
-          <ul id="guideList" class="space-y-3">
-            @foreach(collect($weeklyGuides)->sortBy('week') as $item)
-              <li class="guide-item" data-trimester="{{ $item['trimester'] }}" data-title="{{ strtolower($item['title']) }} {{ strtolower($item['desc']) }}">
-                <details class="rounded-xl border border-pink-100 bg-white overflow-hidden">
-                  <summary class="cursor-pointer select-none list-none px-4 py-3 flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                      <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-pink-100 text-pink-700 text-sm font-semibold">{{ $item['week'] }}</span>
-                      <div>
-                        <p class="font-semibold text-slate-800">{{ $item['title'] }}</p>
-                        <p class="text-xs text-slate-500">Trimester {{ $item['trimester'] }} • Minggu {{ $item['week'] }}</p>
-                      </div>
+                        {{-- Tombol Aksi --}}
+                        <div class="button-group flex flex-col sm:flex-row gap-3">
+                            <button
+                                class="inline-flex items-center justify-center px-5 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-medium hover:opacity-95 transition"
+                                onclick="hitungKehamilan()">Hitung Kehamilan</button>
+                            <button
+                                class="inline-flex items-center justify-center px-5 py-3 rounded-full bg-pink-100 text-pink-700 hover:bg-pink-200 transition"
+                                onclick="resetForm()">Reset</button>
+                        </div>
                     </div>
-                    <svg width="18" height="18" viewBox="0 0 24 24" class="text-slate-400" fill="currentColor" aria-hidden="true"><path d="M12 15.5 5 8.5l1.4-1.4 5.6 5.59 5.6-5.6L19 8.5z"/></svg>
-                  </summary>
-                  <div class="px-4 pb-4 text-slate-700">
-                    <p class="leading-relaxed">{{ $item['desc'] }}</p>
-                    <p class="mt-2 text-xs text-slate-500">Catatan: Materi lengkap dapat ditautkan dari Notion.</p>
-                  </div>
-                </details>
-              </li>
-            @endforeach
-          </ul>
-          <p id="guideCount" class="mt-2 text-xs text-slate-500" aria-live="polite"></p>
+
+                    {{-- Kolom Hasil --}}
+                    <div id="hasil"
+                        class="result-container mt-6 md:mt-0 rounded-xl border border-pink-100 bg-pink-50/60 p-5"
+                        style="display: none;">
+                        <h2 class="text-lg font-semibold text-gray-800 mb-4">Hasil Perhitungan</h2>
+                        <div id="hasil-detail" class="space-y-3">
+                            {{-- Hasil akan dimasukkan oleh JavaScript di sini --}}
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Semua konten informasi lainnya --}}
+                <div class="mt-10 space-y-8">
+                    <div class="info-section bg-white p-6 rounded-xl border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Tentang Kalkulator Kehamilan</h3>
+                        <p class="text-gray-600">Kalkulator kehamilan adalah alat yang membantu menghitung usia kehamilan
+                            dan memperkirakan Hari Perkiraan Lahir (HPL) berdasarkan Hari Pertama Haid Terakhir (HPHT) dan
+                            lama siklus menstruasi. Perhitungan ini menggunakan metode Naegele yang telah terbukti akurat
+                            untuk sebagian besar kehamilan.</p>
+                        <ul class="info-list mt-4 space-y-2">
+                            <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                    class="text-gray-700">Menghitung usia kehamilan dalam minggu dan hari</span></li>
+                            <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                    class="text-gray-700">Memperkirakan Hari Perkiraan Lahir (HPL)</span></li>
+                            <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                    class="text-gray-700">Menentukan trimester kehamilan saat ini</span></li>
+                            <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                    class="text-gray-700">Memberikan perkiraan tanggal konsepsi</span></li>
+                            <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                    class="text-gray-700">Menampilkan informasi perkembangan janin</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="tips-grid grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="tip-card bg-white p-6 rounded-xl border border-gray-200">
+                            <h4 class="font-semibold text-pink-600 mb-3">Tips Trimester Pertama</h4>
+                            <ul class="info-list space-y-2 text-sm">
+                                <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                        class="text-gray-700">Konsumsi asam folat 400-600 mcg per hari</span></li>
+                                <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                        class="text-gray-700">Hindari alkohol dan merokok</span></li>
+                                <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                        class="text-gray-700">Perbanyak istirahat</span></li>
+                            </ul>
+                        </div>
+                        <div class="tip-card bg-white p-6 rounded-xl border border-gray-200">
+                            <h4 class="font-semibold text-pink-600 mb-3">Tips Trimester Kedua</h4>
+                            <ul class="info-list space-y-2 text-sm">
+                                <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                        class="text-gray-700">Mulai olahraga ringan</span></li>
+                                <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                        class="text-gray-700">Lakukan USG detail</span></li>
+                                <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                        class="text-gray-700">Jaga kenaikan berat badan</span></li>
+                            </ul>
+                        </div>
+                        <div class="tip-card bg-white p-6 rounded-xl border border-gray-200">
+                            <h4 class="font-semibold text-pink-600 mb-3">Tips Trimester Ketiga</h4>
+                            <ul class="info-list space-y-2 text-sm">
+                                <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                        class="text-gray-700">Siapkan tas persalinan</span></li>
+                                <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                        class="text-gray-700">Ikuti kelas laktasi</span></li>
+                                <li class="flex items-start"><span class="text-pink-500 mr-2">✓</span><span
+                                        class="text-gray-700">Pantau gerakan janin</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="warning bg-yellow-50 border-l-4 border-yellow-400 text-yellow-700 p-4 rounded-r-lg">
+                        <h4 class="font-bold">Penting untuk Diingat</h4>
+                        <p>Hasil perhitungan ini hanya berupa perkiraan. Selalu konsultasikan dengan dokter kandungan untuk
+                            pemantauan kehamilan yang lebih akurat.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
+
+    <section aria-labelledby="weekly-guide" class="py-10 md:py-14">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <header class="text-center max-w-3xl mx-auto">
+                <h2 id="weekly-guide" class="text-3xl md:text-4xl font-semibold text-gray-900">
+                    Panduan Perkembangan Janin per Minggu
+                </h2>
+                <p class="mt-3 text-gray-600">
+                    Ikuti perjalanan menakjubkan si kecil dari minggu ke minggu, mulai dari pembuahan hingga menjelang
+                    persalinan.
+                </p>
+            </header>
+
+            <div class="mt-10 space-y-12">
+                {{-- Loop untuk setiap Trimester --}}
+                @foreach ($pregnancyData as $trimesterName => $trimesterData)
+                    <div class="trimester-section">
+                        <div class="sticky top-0  backdrop-blur-sm py-4 z-10 border-b-2 border-pink-200">
+                            <h3 class="text-2xl font-bold text-pink-700">{{ $trimesterName }}</h3>
+                            <p class="text-sm text-gray-600">{{ $trimesterData['range'] }}</p>
+                        </div>
+
+                        <div class="mt-6 space-y-8">
+                            {{-- Loop untuk setiap Minggu di dalam Trimester --}}
+                            @foreach ($trimesterData['weeks'] as $weekNumber => $weekData)
+                                <div id="minggu-{{ $weekNumber }}"
+                                    class="week-card grid grid-cols-1 md:grid-cols-3 gap-6 items-start bg-white p-5 rounded-2xl border border-pink-100 shadow-sm">
+
+                                    {{-- Kolom Gambar --}}
+                                    <div class="md:col-span-1 text-center">
+                                        <h4 class="text-xl font-semibold text-gray-800">{{ $weekData['title'] }}</h4>
+                                        <img src="{{ asset($weekData['image']) }}" alt="{{ $weekData['title'] }}"
+                                            class="w-full h-auto max-w-[200px] mx-auto my-4">
+                                        <div class="text-center">
+                                            <p class="text-base font-medium text-gray-700">Bayi Bunda Seukuran
+                                                {{ $weekData['size'] }}</p>
+                                            <div class="mt-2 flex justify-center divide-x text-sm">
+                                                <div class="px-3">
+                                                    <p class="font-semibold text-pink-600">{{ $weekData['weight'] }}</p>
+                                                    <p class="text-gray-500">Berat</p>
+                                                </div>
+                                                <div class="px-3">
+                                                    <p class="font-semibold text-pink-600">{{ $weekData['height'] }}</p>
+                                                    <p class="text-gray-500">Tinggi</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Kolom Penjelasan --}}
+                                    <div
+                                        class="md:col-span-2 prose max-w-none prose-p:text-gray-600 prose-headings:text-gray-900 prose-strong:text-pink-600">
+                                        {!! $weekData['content'] !!}
+
+                                        @if (!empty($weekData['mom_tips']))
+                                            <div class="mt-4 p-4 bg-pink-50 rounded-lg">
+                                                <strong>Bunda Jangan Lupa</strong>
+                                                <ul class="list-disc pl-5 mt-2 space-y-1">
+                                                    @foreach ($weekData['mom_tips'] as $tip)
+                                                        <li>{{ $tip }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+
+                                        @if (!empty($weekData['dad_tips']))
+                                            <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                                                <strong class="text-blue-600">Ayah Hebat</strong>
+                                                <ul class="list-disc pl-5 mt-2 space-y-1">
+                                                    @foreach ($weekData['dad_tips'] as $tip)
+                                                        <li>{{ $tip }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
 @endsection
 
 @push('scripts')
-<script>
-(function() {
-  const input = document.getElementById('lmpDate');
-  const btnHitung = document.getElementById('btnHitung');
-  const btnReset = document.getElementById('btnReset');
+    {{-- Script tidak diubah, hanya memastikan ID elemen HTML sesuai --}}
+    <script>
+        function hitungKehamilan() {
+            const hphtInput = document.getElementById('hpht').value;
+            const siklusInput = parseInt(document.getElementById('siklus').value);
 
-  const usiaEl = document.getElementById('usia');
-  const triEl = document.getElementById('trimester');
-  const etdEl = document.getElementById('etd');
-  const progressTextEl = document.getElementById('progressText');
-  const progressBarEl = document.getElementById('progressBar');
-  const statusEl = document.getElementById('calcStatus');
+            if (!hphtInput) {
+                alert('Silakan masukkan tanggal HPHT terlebih dahulu.');
+                return;
+            }
 
-  function formatDate(d) {
-    const pad = (n) => String(n).padStart(2, '0');
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-  }
+            const hpht = new Date(hphtInput);
+            const hariIni = new Date();
 
-  function compute() {
-    const val = input.value;
-    if (!val) {
-      statusEl.textContent = 'Silakan isi tanggal HPHT terlebih dahulu.';
-      return;
-    }
-    const lmp = new Date(val + 'T00:00:00');
-    const now = new Date();
-    if (isNaN(lmp.getTime()) || lmp > now) {
-      statusEl.textContent = 'Tanggal HPHT tidak valid.';
-      return;
-    }
-    const msPerDay = 24 * 60 * 60 * 1000;
-    const diffDays = Math.floor((now - lmp) / msPerDay);
-    const weeks = Math.floor(diffDays / 7);
-    const days = diffDays % 7;
+            const adjustmentDays = siklusInput - 28;
+            const hpl = new Date(hpht);
+            hpl.setDate(hpl.getDate() + 280 + adjustmentDays);
 
-    // ETD (HPL) = HPHT + 280 hari
-    const etd = new Date(lmp.getTime() + (280 * msPerDay));
+            const selisihHari = Math.floor((hariIni - hpht) / (1000 * 60 * 60 * 24));
+            const usiaKehamilan = Math.max(0, selisihHari);
+            const usiaMinggu = Math.floor(usiaKehamilan / 7);
+            const usiaHari = usiaKehamilan % 7;
 
-    // Trimester: T1 (0-13), T2 (14-27), T3 (28-42)
-    let tri = 1;
-    if (weeks >= 28) tri = 3;
-    else if (weeks >= 14) tri = 2;
+            let trimester = '';
+            let infoTrimester = '';
+            if (usiaMinggu <= 12) {
+                trimester = 'Trimester Pertama';
+                infoTrimester =
+                    'Periode pembentukan organ-organ vital bayi. Penting untuk mengonsumsi asam folat dan menjaga pola makan yang sehat.';
+            } else if (usiaMinggu <= 27) {
+                trimester = 'Trimester Kedua';
+                infoTrimester =
+                    'Periode yang paling nyaman. Anda mulai dapat merasakan gerakan janin dan melakukan USG untuk mengetahui jenis kelamin bayi.';
+            } else {
+                trimester = 'Trimester Ketiga';
+                infoTrimester =
+                    'Periode persiapan persalinan. Pastikan Anda sudah menyiapkan tas persalinan dan rencana melahirkan.';
+            }
 
-    const progress = Math.max(0, Math.min(100, Math.round((weeks / 40) * 100)));
+            const konsepsi = new Date(hpht);
+            konsepsi.setDate(konsepsi.getDate() + (siklusInput - 14));
 
-    usiaEl.textContent = `${weeks} minggu ${days} hari`;
-    triEl.textContent = `Trimester ${tri}`;
-    etdEl.textContent = formatDate(etd);
-    progressTextEl.textContent = `${progress}%`;
-    progressBarEl.style.width = progress + '%';
-    statusEl.textContent = 'Perhitungan selesai.';
-  }
+            const sisaHari = Math.ceil((hpl - hariIni) / (1000 * 60 * 60 * 24));
 
-  function reset() {
-    input.value = '';
-    usiaEl.textContent = '-';
-    triEl.textContent = '-';
-    etdEl.textContent = '-';
-    progressTextEl.textContent = '-';
-    progressBarEl.style.width = '0%';
-    statusEl.textContent = 'Data kalkulator direset.';
-  }
+            const formatTanggal = (tanggal) => {
+                const bulanIndonesia = [
+                    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                ];
+                return `${tanggal.getDate()} ${bulanIndonesia[tanggal.getMonth()]} ${tanggal.getFullYear()}`;
+            };
 
-  btnHitung?.addEventListener('click', compute);
-  btnReset?.addEventListener('click', reset);
-})();
+            let beratJanin = '';
+            if (usiaMinggu >= 20) {
+                const beratEstimasi = Math.pow(usiaMinggu - 5.6, 3) / 100;
+                beratJanin = `Perkiraan berat janin: ${Math.round(beratEstimasi)} gram`;
+            }
 
-(function() {
-  const triButtons = document.querySelectorAll('.tri-btn');
-  const items = Array.from(document.querySelectorAll('.guide-item'));
-  const searchInput = document.getElementById('searchGuide');
-  const countEl = document.getElementById('guideCount');
+            // Menggunakan style dari Tailwind untuk hasil
+            let hasilHTML = `
+            <div class="flex justify-between py-2 border-b border-pink-200">
+                <span class="text-sm font-medium text-gray-600">Usia Kehamilan:</span>
+                <span class="text-sm font-semibold text-pink-600">${usiaMinggu} minggu ${usiaHari} hari</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-pink-200">
+                <span class="text-sm font-medium text-gray-600">HPL:</span>
+                <span class="text-sm font-semibold text-pink-600">${formatTanggal(hpl)}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-pink-200">
+                <span class="text-sm font-medium text-gray-600">Trimester:</span>
+                <span class="text-sm font-semibold text-pink-600">${trimester}</span>
+            </div>
+            <div class="flex justify-between py-2">
+                <span class="text-sm font-medium text-gray-600">Sisa Waktu:</span>
+                <span class="text-sm font-semibold text-pink-600">${sisaHari > 0 ? sisaHari + ' hari lagi' : 'Sudah melewati HPL'}</span>
+            </div>
+        `;
 
-  let activeTri = 'all';
-  let keyword = '';
+            if (beratJanin) {
+                hasilHTML += `
+                <div class="flex justify-between py-2 border-t border-pink-200 mt-2">
+                    <span class="text-sm font-medium text-gray-600">Estimasi Berat Janin:</span>
+                    <span class="text-sm font-semibold text-pink-600">${Math.round(Math.pow(usiaMinggu - 5.6, 3) / 100)} gram</span>
+                </div>
+            `;
+            }
 
-  function apply() {
-    let shown = 0;
-    items.forEach(li => {
-      const tri = li.getAttribute('data-trimester');
-      const title = li.getAttribute('data-title') || '';
-      const matchTri = (activeTri === 'all') || (String(tri) === String(activeTri));
-      const matchKey = !keyword || title.includes(keyword.toLowerCase());
-      const visible = matchTri && matchKey;
-      li.style.display = visible ? '' : 'none';
-      if (visible) shown++;
-    });
-    if (countEl) {
-      countEl.textContent = `${shown} materi ditampilkan`;
-    }
-  }
+            document.getElementById('hasil-detail').innerHTML = hasilHTML;
+            document.getElementById('hasil').style.display = 'block';
 
-  triButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      triButtons.forEach(b => {
-        if (b === btn) {
-          b.classList.remove('bg-slate-100','text-slate-700');
-          b.classList.add('bg-pink-100','text-pink-700');
-        } else {
-          b.classList.remove('bg-pink-100','text-pink-700');
-          b.classList.add('bg-slate-100','text-slate-700');
+            document.getElementById('hasil').scrollIntoView({
+                behavior: 'smooth'
+            });
         }
-      });
-      activeTri = btn.getAttribute('data-tri') || 'all';
-      apply();
-    });
-  });
 
-  searchInput?.addEventListener('input', (e) => {
-    keyword = (e.target.value || '').toLowerCase().trim();
-    apply();
-  });
+        function resetForm() {
+            document.getElementById('hpht').value = '';
+            document.getElementById('siklus').value = '28';
+            document.getElementById('hasil').style.display = 'none';
+        }
 
-  apply();
-})();
-</script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hariIni = new Date().toISOString().split('T')[0];
+            document.getElementById('hpht').max = hariIni;
+        });
+    </script>
 @endpush
