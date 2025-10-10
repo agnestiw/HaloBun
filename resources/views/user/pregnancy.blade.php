@@ -154,64 +154,128 @@
                 {{-- Loop untuk setiap Trimester --}}
                 @foreach ($pregnancyData as $trimesterName => $trimesterData)
                     <div class="trimester-section">
-                        <div class="sticky top-0  backdrop-blur-sm py-4 z-10 border-b-2 border-pink-200">
+                        <div class="top-0 backdrop-blur-sm py-4 z-10 border-b-2 border-pink-200">
                             <h3 class="text-2xl font-bold text-pink-700">{{ $trimesterName }}</h3>
                             <p class="text-sm text-gray-600">{{ $trimesterData['range'] }}</p>
                         </div>
 
-                        <div class="mt-6 space-y-8">
+                        <div class="mt-6 space-y-4">
                             {{-- Loop untuk setiap Minggu di dalam Trimester --}}
                             @foreach ($trimesterData['weeks'] as $weekNumber => $weekData)
-                                <div id="minggu-{{ $weekNumber }}"
-                                    class="week-card grid grid-cols-1 md:grid-cols-3 gap-6 items-start bg-white p-5 rounded-2xl border border-pink-100 shadow-sm">
-
-                                    {{-- Kolom Gambar --}}
-                                    <div class="md:col-span-1 text-center">
-                                        <h4 class="text-xl font-semibold text-gray-800">{{ $weekData['title'] }}</h4>
-                                        <img src="{{ asset($weekData['image']) }}" alt="{{ $weekData['title'] }}"
-                                            class="w-full h-auto max-w-[200px] mx-auto my-4">
-                                        <div class="text-center">
-                                            <p class="text-base font-medium text-gray-700">Bayi Bunda Seukuran
-                                                {{ $weekData['size'] }}</p>
-                                            <div class="mt-2 flex justify-center divide-x text-sm">
-                                                <div class="px-3">
-                                                    <p class="font-semibold text-pink-600">{{ $weekData['weight'] }}</p>
-                                                    <p class="text-gray-500">Berat</p>
-                                                </div>
-                                                <div class="px-3">
-                                                    <p class="font-semibold text-pink-600">{{ $weekData['height'] }}</p>
-                                                    <p class="text-gray-500">Tinggi</p>
-                                                </div>
-                                            </div>
+                                <div x-data="{ open: false }" id="minggu-{{ $weekNumber }}"
+                                    class="week-card bg-white border border-pink-100 rounded-2xl shadow-sm overflow-hidden">
+                                    {{-- Header Accordion --}}
+                                    <button @click="open = !open"
+                                        class="w-full flex justify-between items-center px-5 py-4 text-left focus:outline-none">
+                                        <div class="flex items-center gap-3">
+                                            <h4 class="text-lg font-semibold text-gray-800">
+                                                {{ $weekData['title'] }}
+                                            </h4>
+                                            <span class="text-sm text-gray-500"></span>
                                         </div>
-                                    </div>
+                                        <svg x-show="!open" xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-pink-600" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                        <svg x-show="open" xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-pink-600" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7" />
+                                        </svg>
+                                    </button>
 
-                                    {{-- Kolom Penjelasan --}}
-                                    <div
-                                        class="md:col-span-2 prose max-w-none prose-p:text-gray-600 prose-headings:text-gray-900 prose-strong:text-pink-600">
-                                        {!! $weekData['content'] !!}
+                                    {{-- Konten Accordion --}}
+                                    <div x-show="open" x-transition:enter="transition ease-out duration-300"
+                                        x-transition:enter-start="opacity-0 -translate-y-2"
+                                        x-transition:enter-end="opacity-100 translate-y-0"
+                                        x-transition:leave="transition ease-in duration-200"
+                                        x-transition:leave-start="opacity-100 translate-y-0"
+                                        x-transition:leave-end="opacity-0 -translate-y-2"
+                                        class="px-5 pb-6 md:grid md:grid-cols-3 md:gap-6">
+                                        {{-- Kolom Gambar --}}
+                                        <div>
+                                            <img src="{{ asset($weekData['image']) }}" alt="{{ $weekData['title'] }}"
+                                                class="w-full h-auto max-w-[200px] mx-auto my-4">
+                                            <p class="text-sm text-center font-medium text-gray-700">Bayi Bunda Seukuran
+                                                {{ $weekData['size'] }}</p>
+                                            @if (!empty($weekData['weight']) || !empty($weekData['height']))
+                                                <div class="mt-2 flex justify-center divide-x text-sm">
+                                                    @if (!empty($weekData['weight']))
+                                                        <div class="px-3">
+                                                            <p class="font-semibold text-pink-600">
+                                                                {{ $weekData['weight'] }}</p>
+                                                            <p class="text-gray-500">Berat</p>
+                                                        </div>
+                                                    @endif
+                                                    @if (!empty($weekData['height']))
+                                                        <div class="px-3">
+                                                            <p class="font-semibold text-pink-600">
+                                                                {{ $weekData['height'] }}</p>
+                                                            <p class="text-gray-500">Tinggi</p>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                            @foreach ($weekData['contents'] as $content)
+                                                @if (!empty($content))
+                                                    <div class="my-6">
+                                                        {!! $content !!}
+                                                    </div>
+                                                @endif
+                                            @endforeach
 
-                                        @if (!empty($weekData['mom_tips']))
-                                            <div class="mt-4 p-4 bg-pink-50 rounded-lg">
-                                                <strong>Bunda Jangan Lupa</strong>
-                                                <ul class="list-disc pl-5 mt-2 space-y-1">
-                                                    @foreach ($weekData['mom_tips'] as $tip)
-                                                        <li>{{ $tip }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        @endif
+                                        </div>
 
-                                        @if (!empty($weekData['dad_tips']))
-                                            <div class="mt-4 p-4 bg-blue-50 rounded-lg">
-                                                <strong class="text-blue-600">Ayah Hebat</strong>
-                                                <ul class="list-disc pl-5 mt-2 space-y-1">
-                                                    @foreach ($weekData['dad_tips'] as $tip)
-                                                        <li>{{ $tip }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        @endif
+                                        <div
+                                            class="md:col-span-2 prose max-w-none prose-p:text-gray-600 prose-headings:text-gray-900 mt-4 md:mt-0">
+
+
+                                            @if (!empty($weekData['mom_tips']))
+                                                <div class="mt-4 p-4 bg-pink-50 rounded-lg">
+                                                    <strong class="text-pink-700">Bunda Jangan Lupa</strong>
+                                                    <ul class="list-disc pl-5 mt-2 space-y-2">
+                                                        @foreach ($weekData['mom_tips'] as $tip)
+                                                            <li>
+                                                                <strong class="text-gray-600">{{ $tip['title'] }}</strong>
+                                                                <p class="text-gray-600 mt-1">{{ $tip['desc'] }}</p>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+
+                                            @if (!empty($weekData['mom_should']))
+                                                <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                                                    <strong class="text-blue-700">Bunda Sebaiknya</strong>
+                                                    <ul class="list-disc pl-5 mt-2 space-y-2">
+                                                        @foreach ($weekData['mom_should'] as $tip)
+                                                            <li>
+                                                                <strong class="text-gray-600">{{ $tip['title'] }}</strong>
+                                                                <p class="text-gray-600 mt-1">{{ $tip['desc'] }}</p>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+
+                                            @if (!empty($weekData['mom_feel']))
+                                                <div class="mt-4 p-4 bg-green-50 rounded-lg">
+                                                    <strong class="text-green-700">Apa yang Bunda Rasakan</strong>
+                                                    <ul class="list-disc pl-5 mt-2 space-y-2">
+                                                        @foreach ($weekData['mom_feel'] as $tip)
+                                                            <li>
+                                                                <strong class="text-gray-600">{{ $tip['title'] }}</strong>
+                                                                <p class="text-gray-600 mt-1">{{ $tip['desc'] }}</p>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -221,6 +285,9 @@
             </div>
         </div>
     </section>
+
+    {{-- Tambahkan Alpine.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 @endsection
 
 @push('scripts')

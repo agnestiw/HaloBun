@@ -27,7 +27,7 @@
         <div>
             <label for="content" class="block text-sm font-medium text-gray-700">Isi Artikel</label>
             {{-- Untuk hasil terbaik, gunakan editor WYSIWYG seperti TinyMCE atau Trix Editor di sini --}}
-            <textarea name="content" id="content" rows="10" required
+            <textarea name="content" id="content" rows="10"
                 class="mt-1 block w-full rounded-xl border-pink-200 shadow-sm focus:border-pink-300 focus:ring focus:ring-pink-200 focus:ring-opacity-50 px-4 py-2 text-base">{{ old('content', $article?->content) }}</textarea>
         </div>
     </div>
@@ -121,3 +121,35 @@
         Simpan Artikel
     </button>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        tinymce.init({
+            selector: '#content',
+            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount',
+            toolbar: 'undo redo | blocks | bold italic underline forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code preview',
+            menubar: false,
+            height: 400,
+            branding: false,
+            skin: "oxide",
+            entity_encoding: "raw",
+            verify_html: false,
+            valid_elements: '*[*]', // biarkan semua tag HTML
+            forced_root_block: '', // opsional: agar tidak auto-<p>
+            content_style: "body { font-family:Inter,Arial,sans-serif; font-size:14px }",
+            setup: (editor) => {
+                editor.on('init', () => {
+                    editor.getContainer().style.borderRadius = '12px';
+                });
+            }
+        });
+
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                tinymce.triggerSave();
+            });
+        }
+    });
+</script>

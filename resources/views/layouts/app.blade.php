@@ -24,20 +24,22 @@
         <!-- Navigation -->
         <nav class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-pink-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
+                <div class="flex items-center justify-between h-16">
                     <!-- Logo & Brand -->
                     <div class="flex items-center">
                         <a href="{{ url('/') }}" class="flex items-center space-x-2">
                             <img src="{{ asset('img/logo-halobun.png') }}" alt="Logo HaloBun" class="h-8 w-auto">
                             <span
-                                class="text-xl font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">HaloBun</span>
+                                class="text-xl font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+                                HaloBun
+                            </span>
                         </a>
                     </div>
 
                     <!-- Desktop Navigation -->
-                    <div class="hidden md:flex items-center space-x-8">
-                        <a href="{{ url('/') }}"
-                            class="text-gray-700 hover:text-pink-500 transition-colors font-medium">Home</a>
+                    <div class="hidden md:flex items-center space-x-12">
+                        <a href="{{ url('/pregnancy-track') }}"
+                            class="text-gray-700 hover:text-pink-500 transition-colors font-medium">Pregnancy Track</a>
                         <a href="{{ url('/artikel') }}"
                             class="text-gray-700 hover:text-pink-500 transition-colors font-medium">Artikel</a>
                         <a href="{{ url('/video') }}"
@@ -49,13 +51,7 @@
                         <a href="{{ url('/contact') }}"
                             class="text-gray-700 hover:text-pink-500 transition-colors font-medium">Contact</a>
                     </div>
-
-                    <!-- User Menu & Mobile Toggle -->
                     <div class="flex items-center space-x-4">
-                        <a href="{{ url('/pregnancy-track') }}"
-                            class="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full hover:shadow-lg transition-all transform hover:scale-105">
-                            Pregnancy Track
-                        </a>
 
                         <!-- Mobile menu button -->
                         <button class="md:hidden p-2 rounded-lg text-gray-700 hover:bg-pink-50 transition-colors"
@@ -67,13 +63,15 @@
                         </button>
                     </div>
                 </div>
+
             </div>
 
             <!-- Mobile Navigation -->
             <div id="mobileMenu" class="md:hidden hidden">
                 <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-pink-100">
-                    <a href="{{ url('/') }}"
-                        class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-pink-50 hover:text-pink-500 transition-colors">Home</a>
+                    <a href="{{ url('/pregnancy-track') }}"
+                        class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-pink-50 hover:text-pink-500 transition-colors">Pregnancy
+                        Track</a>
                     <a href="{{ url('/artikel') }}"
                         class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-pink-50 hover:text-pink-500 transition-colors">Artikel</a>
                     <a href="{{ url('/video') }}"
@@ -194,7 +192,7 @@
 
                 <div class="mt-8 pt-8 border-t border-pink-100 text-center">
                     <p class="text-sm text-gray-600">
-                        © 2024 HaloBun. Semua hak dilindungi. Made with
+                        © 2024 HaloBun. Made 
                         <span class="text-pink-500">♥</span> for Indonesian Moms
                     </p>
                 </div>

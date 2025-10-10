@@ -262,8 +262,6 @@
                         Lihat semua Lokasi Fasilitas
                     </a>
                 </div>
-                {{-- Kode Baru dengan Data dari Database --}}
-                {{-- Kode Baru yang Lebih Detail --}}
                 <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @forelse($latestFacilities as $f)
                         <article
@@ -334,7 +332,6 @@
                 </div>
             </div>
 
-                        {{-- FAQ Terbaru (Cards + details) --}}
             <div class="mt-10">
                 <div class="flex items-center gap-2 justify-between">
                     <div class="flex items-center gap-2">

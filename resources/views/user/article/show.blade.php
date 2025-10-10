@@ -24,7 +24,7 @@
                         </h1>
 
                         {{-- Info Tanggal --}}
-                        <p class="text-sm text-gray-500">
+                        <p class="mt-2 text-sm text-gray-500">
                             @if ($article->published_at)
                                 Dipublikasikan pada {{ $article->published_at->translatedFormat('d F Y') }}
                             @endif
