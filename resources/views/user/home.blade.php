@@ -78,7 +78,7 @@
     <section aria-labelledby="main-nav" class="mt-10 sm:mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 id="main-nav" class="text-xl font-semibold text-gray-900">Jelajah HaloBun</h2>
-            <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+            <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
                 @php
                     $menus = [
                         ['label' => 'Artikel', 'url' => url('/artikel'), 'icon' => 'M4 6h16M4 12h16M4 18h16'],
@@ -87,11 +87,6 @@
                             'label' => 'Fasilitas',
                             'url' => url('/fasilitas'),
                             'icon' => 'M4 4h16v6H4zM4 14h7v6H4zM13 14h7v6h-7z',
-                        ],
-                        [
-                            'label' => 'Konsultasi',
-                            'url' => url('/konsultasi'),
-                            'icon' => 'M12 20l9-5-9-5-9 5 9 5z M12 12V4',
                         ],
                         [
                             'label' => 'FAQ',
@@ -381,13 +376,13 @@
             <div
                 class="rounded-2xl border border-pink-100 bg-gradient-to-r from-pink-50 to-purple-50 p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
-                    <h2 id="cta" class="text-lg sm:text-xl font-semibold text-gray-900">Butuh saran cepat?</h2>
-                    <p class="mt-1 text-gray-700 text-sm">Kunjungi halaman Konsultasi untuk terhubung dengan tenaga
-                        kesehatan.</p>
+                    <h2 id="cta" class="text-lg sm:text-xl font-semibold text-gray-900">Punya Pertanyaan Lain?</h2>
+                    <p class="mt-1 text-gray-700 text-sm">Jangan ragu untuk menghubungi kami jika Anda memiliki pertanyaan
+                        lebih lanjut.</p>
                 </div>
-                <a href="{{ url('/konsultasi') }}"
+                <a href="{{ url('/contact') }}"
                     class="inline-flex items-center justify-center px-5 py-3 rounded-full bg-white text-pink-600 ring-1 ring-pink-200 hover:bg-pink-50 transition font-medium">
-                    Buka Konsultasi
+                    Hubungi Kami
                 </a>
             </div>
         </div>
