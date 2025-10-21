@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{{ asset('img/logo-halobun.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('img/HaloBun-removebg.png') }}" type="image/png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'HaloBun')</title>
 
@@ -28,7 +28,7 @@
                     <!-- Logo & Brand -->
                     <div class="flex items-center">
                         <a href="{{ url('/') }}" class="flex items-center space-x-2">
-                            <img src="{{ asset('img/logo-halobun.png') }}" alt="Logo HaloBun" class="h-8 w-auto">
+                            <img src="{{ asset('img/HaloBun-removebg.png') }}" alt="Logo HaloBun" class="h-8 w-auto">
                             <span
                                 class="text-xl font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
                                 HaloBun
@@ -98,7 +98,7 @@
                     <!-- About -->
                     <div class="space-y-4">
                         <div class="flex items-center space-x-2">
-                            <img src="{{ asset('img/logo-halobun.png') }}" alt="Logo HaloBun" class="h-8 w-auto">
+                            <img src="{{ asset('img/HaloBun-removebg.png') }}" alt="Logo HaloBun" class="h-8 w-auto">
                             <span
                                 class="text-xl font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">HaloBun</span>
                         </div>

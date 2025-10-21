@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{{ asset('img/logo-halobun.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('img/HaloBun-removebg.png') }}" type="image/png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'HaloBun Admin')</title>
 
@@ -25,7 +25,7 @@
                 <div class="flex justify-between h-16">
                     <div class="flex items-center">
                         <a href="{{ url('/admin') }}" class="flex items-center space-x-2">
-                            <img src="{{ asset('img/logo-halobun.png') }}" alt="Logo HaloBun" class="h-8 w-auto">
+                            <img src="{{ asset('img/HaloBun-removebg.png') }}" alt="Logo HaloBun" class="h-8 w-auto">
                             <span
                                 class="text-xl font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
                                 HaloBun Admin
@@ -97,7 +97,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-2">
-                        <img src="{{ asset('img/logo-halobun.png') }}" alt="Logo HaloBun" class="h-6 w-auto">
+                        <img src="{{ asset('img/HaloBun-removebg.png') }}" alt="Logo HaloBun" class="h-6 w-auto">
                         <span
                             class="text-base font-semibold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
                             HaloBun Admin
